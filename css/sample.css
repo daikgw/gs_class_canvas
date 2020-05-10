@@ -1,0 +1,128 @@
+/* 骨組みの記載 */
+body{
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+
+    margin:0;
+    padding:50px 0;
+
+    font-size: 32px;
+}
+
+header{
+    margin-bottom: 30px;
+
+    background-color: #fff;
+    text-align: center;
+
+    font-weight: bold;
+}
+main{
+    position:relative;
+}
+footer{
+    position: absolute;
+    bottom: 0;
+
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+}
+
+/* テキストエリアに関する記載 */
+.memo{
+    width: 75%;
+    margin: 0 auto 30px;
+
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+
+}
+.midashi{
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+.title,.name{
+    width: 25%;
+    margin: 0 0 15px;
+    padding: 5px;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 1px 1px #555;
+    
+    font-size: 50%;
+}
+.kind{
+    width: 100px;
+    /* padding: 10px 0;
+    box-sizing: border-box; */
+    margin: 0 0 15px 15px;
+    font-size: 50%;
+
+    cursor: pointer;
+}
+.kind>option{    
+    font-size: 50%;
+}
+.text_area{
+    width: 100%;
+    height: 500px;
+    padding: 5px;
+    margin: auto;
+    box-sizing: border-box;
+    box-shadow: 1px 1px 1px 1px #555;
+
+    font-size:55%;
+}
+
+/* ボタン周辺に関する記載 */
+ul{
+    width:50%;
+    display:table;  /* 定義 */
+    table-layout: fixed;
+
+    margin: 0 auto;
+    padding: 0; 
+    
+    text-align: center;
+}
+/* 理想はtablecellに隙間を作りたい */
+li{
+    padding: 10px 0; 
+    border: 1px solid #666;
+    /* 重複を消す処理 */
+    border-right: 0px;
+
+    display:table-cell;  /* 定義 */
+    background-color: #FFF;
+    
+    list-style-type:none;
+    font-size: 1vw;
+
+    cursor: pointer;
+}
+li:hover{
+    background: rgb(230, 230, 230);
+}
+li:last-of-type{
+    background-color: rgb(160, 160, 160);
+    border: 1px solid #666;
+    
+    font-weight: bold;
+}
+
+li:last-of-type:hover{
+    background: rgb(253, 145, 145);
+}
+.back_menu{
+    width: 100px;
+    /* padding: 10px 0;
+    box-sizing: border-box; */
+    margin: 0 auto;
+    font-size: 50%;
+
+    cursor: pointer;
+}
+
