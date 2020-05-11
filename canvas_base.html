@@ -14,6 +14,7 @@
     <!-- 登録したデータを再表示をすることになるかもしれん -->
     <section>
         <h1 id="a">Canvas</h1>
+        <button id="b">保存ボタン</button>
         <nav>
             
             <!-- 線の色を変更するHTML要素 -->
@@ -100,8 +101,15 @@
             ctx.clearRect(0,0,can.width,can.height)
         });
 
-
-
+        $("#b").on("click",function(){
+            let canvas = $("#drowarea")[0];
+            let img_src = canvas.toDataURL("image/png");
+            localStorage.setItem("data",img_src);
+        });
+        function toImg(canvas,img){
+                var img_src = canvas.toDataURL("image/png");
+                img.attr("src",img_src);
+        }
     </script>
 </body>
 
