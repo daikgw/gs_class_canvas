@@ -27,6 +27,7 @@
             <button id="clear_btn">クリアー</button>
         </nav>
         <canvas id="drowarea" width="500" height="500" style="border:1px solid #707070;"></canvas>
+        <div id="return_img"></div>
     </section>
 
 
@@ -106,10 +107,20 @@
             let img_src = canvas.toDataURL("image/png");
             localStorage.setItem("data",img_src);
         });
-        function toImg(canvas,img){
-                var img_src = canvas.toDataURL("image/png");
-                img.attr("src",img_src);
-        }
+        $("#a").on("click",function(){
+            let return_img_src = localStorage.getItem("data");
+            let img01 = new Image();
+            img01.src = return_img_src;
+            // let context = canvas.getContext('2d');
+            //座標(10, 10)の位置にイメージを表示
+            ctx.drawImage(img01, 0, 0);
+        });
+
+
+        // function toImg(canvas,img){
+        //         var img_src = canvas.toDataURL("image/png");
+        //         img.attr("src",img_src);
+        // }
     </script>
 </body>
 
