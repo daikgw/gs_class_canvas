@@ -3,42 +3,28 @@ body{
     width: 100vw;
     height: 100vh;
     position: relative;
-
     margin:0;
     padding:50px 0;
-
     font-size: 32px;
 }
-
 header{
     margin-bottom: 30px;
-
     background-color: #fff;
     text-align: center;
-
     font-weight: bold;
 }
-main{
-    position:relative;
-}
-footer{
-    position: absolute;
-    bottom: 0;
-
-    background-color: #fff;
-    border-bottom:1px solid #ccc;
-    text-align: center;
+header>p{
+    /* 文字サイズ最終調整 */
+    font-size: 75%;
 }
 
 /* テキストエリアに関する記載 */
 .memo{
     width: 75%;
-    margin: 0 auto 30px;
-
+    margin: 0 auto 15px;
     display: flex;
     justify-content: left;
     flex-direction: column;
-
 }
 .midashi{
     display: flex;
@@ -51,78 +37,80 @@ footer{
     padding: 5px;
     box-sizing: border-box;
     box-shadow: 1px 1px 1px 1px #555;
-    
     font-size: 50%;
 }
-.kind{
-    width: 100px;
-    /* padding: 10px 0;
-    box-sizing: border-box; */
+.kind,.color,.range{
+    width: 160px;
     margin: 0 0 15px 15px;
     font-size: 50%;
-
     cursor: pointer;
 }
 .kind>option{    
     font-size: 50%;
 }
+.detail{
+    width: 1400px;
+    height: 500px;
+}
 .text_area{
     width: 100%;
-    height: 500px;
+    height: 100%;
     padding: 5px;
     margin: auto;
     box-sizing: border-box;
     box-shadow: 1px 1px 1px 1px #555;
-
     font-size:55%;
 }
 
 /* ボタン周辺に関する記載 */
 ul{
-    width:50%;
-    display:table;  /* 定義 */
-    table-layout: fixed;
-
     margin: 0 auto;
     padding: 0; 
-    
-    text-align: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
-/* 理想はtablecellに隙間を作りたい */
 li{
+    width: 200px;
+    margin-right: 10px;
     padding: 10px 0; 
-    border: 1px solid #666;
-    /* 重複を消す処理 */
-    border-right: 0px;
-
-    display:table-cell;  /* 定義 */
+    box-sizing: border-box;
+    border: 1px solid #555;
     background-color: #FFF;
-    
     list-style-type:none;
+    text-align: center;
     font-size: 1vw;
-
     cursor: pointer;
 }
 li:hover{
-    background: rgb(230, 230, 230);
+    background: rgb(200, 200, 200);
 }
 li:last-of-type{
-    background-color: rgb(160, 160, 160);
-    border: 1px solid #666;
-    
+    margin-right: 0;
+}
+li:last-of-type:hover{
+    background: rgb(255, 145, 145);
     font-weight: bold;
 }
-
-li:last-of-type:hover{
-    background: rgb(253, 145, 145);
-}
 .back_menu{
-    width: 100px;
-    /* padding: 10px 0;
-    box-sizing: border-box; */
+    width: 110px;
     margin: 0 auto;
     font-size: 50%;
-
     cursor: pointer;
 }
 
+/* footerについては必要に応じて記載 */
+/* footer{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: #fff;
+    border-bottom:1px solid #ccc;
+    text-align: center;
+}
+footer>small{
+    margin: 0 auto;
+    padding: 25px;
+    box-sizing: border-box;
+    font-size: 50%;
+} */
