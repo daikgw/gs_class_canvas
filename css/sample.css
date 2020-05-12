@@ -1,7 +1,6 @@
 /* 骨組みの記載 */
 body{
     width: 100vw;
-    height: 100vh;
     position: relative;
     margin:0;
     padding:50px 0;
@@ -13,12 +12,12 @@ header{
     text-align: center;
     font-weight: bold;
 }
-header>p{
-    /* 文字サイズ最終調整 */
-    font-size: 75%;
-}
 
 /* テキストエリアに関する記載 */
+main{
+    display: flex;
+    flex-direction: column;
+}
 .memo{
     width: 75%;
     margin: 0 auto 15px;
@@ -27,6 +26,7 @@ header>p{
     flex-direction: column;
 }
 .midashi{
+    /* margin-left: -60px; */
     display: flex;
     justify-content: left;
     align-items: center;
@@ -36,12 +36,12 @@ header>p{
     margin: 0 0 15px;
     padding: 5px;
     box-sizing: border-box;
-    box-shadow: 1px 1px 1px 1px #555;
+    /* box-shadow: 1px 1px 1px 1px #555; */
     font-size: 50%;
 }
 /* セレクトボックスの文字位置を調整したい */
 .kind,.back,.color,.range{
-    width: 150px;
+    width: 125px;
     margin: 0 0 15px 15px;
     font-size: 50%;
     cursor: pointer;
@@ -59,13 +59,13 @@ header>p{
     padding: 5px;
     margin: auto;
     box-sizing: border-box;
-    box-shadow: 1px 1px 1px 1px #555;
+    /* box-shadow: 1px 1px 1px 1px #555; */
     font-size:55%;
 }
 
 /* ボタン周辺に関する記載 */
 ul{
-    margin: 0 auto;
+    margin: 0 auto 50px;
     padding: 0; 
     display:flex;
     justify-content: center;
@@ -93,18 +93,23 @@ li:last-of-type:hover{
     background: rgb(255, 145, 145);
     font-weight: bold;
 }
-/* footerについては必要に応じて記載 */
-/* footer{
+.list_table{
     width: 100%;
-    position: absolute;
-    bottom: 0;
-    background-color: #fff;
-    border-bottom:1px solid #ccc;
-    text-align: center;
 }
-footer>small{
-    margin: 0 auto;
-    padding: 25px;
-    box-sizing: border-box;
+table{
+    width: 900px;
+    margin: auto;
     font-size: 50%;
-} */
+}
+th{
+    width: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+    border:solid 1px #555;
+}
+td{
+    width: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+    border:solid 1px #555;
+}
