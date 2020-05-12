@@ -39,13 +39,14 @@ header>p{
     box-shadow: 1px 1px 1px 1px #555;
     font-size: 50%;
 }
-.kind,.color,.range{
-    width: 160px;
+/* セレクトボックスの文字位置を調整したい */
+.kind,.back,.color,.range{
+    width: 150px;
     margin: 0 0 15px 15px;
     font-size: 50%;
     cursor: pointer;
 }
-.kind>option{    
+.kind,.back>option{    
     font-size: 50%;
 }
 .detail{
@@ -71,8 +72,8 @@ ul{
     align-items: center;
 }
 li{
-    width: 200px;
-    margin-right: 10px;
+    width: 250px;
+    margin-right: 15px;
     padding: 10px 0; 
     box-sizing: border-box;
     border: 1px solid #555;
@@ -92,13 +93,6 @@ li:last-of-type:hover{
     background: rgb(255, 145, 145);
     font-weight: bold;
 }
-.back_menu{
-    width: 110px;
-    margin: 0 auto;
-    font-size: 50%;
-    cursor: pointer;
-}
-
 /* footerについては必要に応じて記載 */
 /* footer{
     width: 100%;
