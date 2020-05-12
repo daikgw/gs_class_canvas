@@ -38,11 +38,7 @@
             </div>
         </div>
         <ul id="menu_bar">
-            <!-- ボタンごとの条件で処理を切り替える -->
-            <li id="new">書き換え</li>
-            <li id="renew" style="display:none;">更新</li>
-            <li id="save">保存</li>
-            <li id="clear">リセット</li>
+            <!-- ここには別のところから差し込む -->
         </ul>
     </main>
     <!-- footerの調整は最後の最後でいい、項目が押されると何かアクションがあってもいいかも -->
@@ -52,6 +48,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <!-- jQueryの記述 -->
     <script>
+        // 課題
+        // resetする時にはoptionを破棄する
+        // option選択後、もしくは何かしらのタイミングにおいて初期値に戻す
+
         // 初期設定する変数などはこちらで
         let save_count = 0;
 
@@ -94,7 +94,92 @@
                 $("#canvas_new").remove();               
                 $("#canvas_renew").remove();               
                 $("#canvas_save").remove();               
-                $("#canvas_clear").remove();               
+                $("#canvas_clear").remove(); 
+                // ----------------------------
+                // メモのメニューバー処理
+                // 書き換え処理
+                $("#new").on("click",function(){
+                    $("#name").val("");
+                    $("#title").val("");
+                    $("#text_area").val("");
+                });
+                // 保存処理
+                $("#save").on("click",function(){
+                    save_count ++;
+                    const name = $("#name").val();
+                    const title = $("#title").val();
+                    const kind = $("#kind").val();
+                    const text_area = $("#text_area").val();
+                    // 全てが空欄の時は保存処理ができないよう
+                    if (name!="" && title!="" && kind!="" && text_area!=""){
+                        const memo_data = {        
+                                "name":name,
+                                "title":title,
+                                "kind":kind,
+                                "text_area":text_area
+                        };           
+                        // obj形式からjson形式に変更し、それをkey"Data"とし保存                
+                        const m = JSON.stringify(memo_data);
+                        localStorage.setItem(memo_data.title, m);
+                        $("#back_menu").append($('<option>').html(memo_data.title).val(memo_data.title));
+                        alert("保存が完了しました");
+                        // 初期化する
+                        reset();
+                    }else{
+                        // 空欄項目がある際の処理をelseで記載する
+                        alert("入力が必要な項目があります")
+                    }
+                });
+
+                // リセット処理は、指定したものだけリセットするかどうかを検討
+                $("#clear").on("click",function(){ 
+                    reset();
+                    alert("削除しました");
+                });
+
+                // メモ一覧の中のセレクトボックスを選択した際の処理
+                $("#back_menu").change(function(){
+                    const memo_return = $("#back_menu").val();
+                    console.log(memo_return);
+                    const json = localStorage.getItem(memo_return);
+                    const memo_data = JSON.parse(json);
+                    // localデータに入れ子で登録したデータで複数データ保存ができるようにしている
+                    $("#name").val(memo_data.name);
+                    $("#title").val(memo_data.title);
+                    $("#kind").val(memo_data.kind);
+                    $("#text_area").val(memo_data.text_area);  
+
+                    // メモ一覧を押したときだけ更新を出現する
+                    $("#new").css("display","none");
+                    $("#save").css("display","none");
+                    $("#renew").css("display","block");
+
+                    // 更新の処理について記載
+                    // ★メモ一覧などを初期値に戻す 
+                    $("#renew").on("click",function(){
+                        const name = $("#name").val();
+                        const title = $("#title").val();
+                        const kind = $("#kind").val();
+                        const text_area = $("#text_area").val();
+                        const memo_data = {        
+                                "name":name,
+                                "title":title,
+                                "kind":kind,
+                                "text_area":text_area
+                        };           
+                        const m = JSON.stringify(memo_data);
+                        // titleは変更が効かないようにしたい
+                        localStorage.setItem(memo_data.title, m)
+
+                        // 更新ボタンを外し、保存ボタンをつける
+                        $("#new").css("display","block");
+                        $("#save").css("display","block");
+                        $("#renew").css("display","none");
+                        alert("メモの更新が完了しました");
+                        reset();
+                    });
+                })
+                // ----------------------------
             }else if($("#kind").val() == "お絵かき"){
                 // 初期orメモの途中から遷移した時の処理
                 $("#h1").text("お絵かき帳");
@@ -158,161 +243,96 @@
                 });
                 $(can).on("mouseleave",function(){
                     canvas_mouse_event = false;
-                });         
+                });     
+                // ----------------------------
+                // canvasのメニューバー処理
+                // 残課題
+                // ・保存しているものの合計数などを表現するかどうかを考える
+                // ・colorとrangeの初期値に書き換えと保存というかほぼ全てのボタンを押す時に初期値に戻す
+                // 書き換え処理
+                $("#canvas_new").on("click",function(){
+                    ctx.beginPath();
+                    ctx.clearRect(0,0,can.width,can.height)
+                });
+                $("#canvas_save").on("click",function(){
+                    // この0が大事、意味はチューターさんに確認
+                    const name = $("#name").val();
+                    const title = $("#title").val();
+                    const kind = $("#kind").val();
+                    const canvas = $("#drowarea")[0];
+                    const canvas_img = canvas.toDataURL("image/png");
+                    const canvas_data = {        
+                                "name":name,
+                                "title":title,
+                                "kind":kind,
+                                "img_src":canvas_img
+                    }
+                    const c = JSON.stringify(canvas_data);
+                    localStorage.setItem(canvas_data.title,c);
+                    $("#canvas_back_menu").append($('<option>').html(canvas_data.title).val(canvas_data.title));
+                    alert("画像保存しました");
+                    // 初期化
+                    ctx.beginPath();
+                    ctx.clearRect(0,0,can.width,can.height)
+                });
+
+                $("#canvas_clear").on("click",function(){
+                    ctx.beginPath();
+                    ctx.clearRect(0,0,can.width,can.height)
+                    alert("リセット完了です");
+                });
+                
+                $("#canvas_back_menu").change(function(){
+                    const canvas_return = $("#canvas_back_menu").val();
+                    const canvas_return_img = localStorage.getItem(canvas_return);
+                    const canvas_return_data = JSON.parse(canvas_return_img);
+                    const canvas_final_return = canvas_return_data.img_src;
+                    // 二回クリックしないいけない理由がわからないが、下に表示ボタンをつける
+                    $("#h1").on("click",function(){
+                        console.log(canvas_return_data);
+                        console.log(canvas_final_return);
+                        let ex_img = new Image();
+                        ex_img.src = canvas_final_return;
+                        ctx.drawImage(ex_img, 0, 0);
+                        alert("前のデータを表示しました");
+                    });
+                    //表示するメニューの変更
+                    $("#canvas_new").css("display","none");
+                    $("#canvas_save").css("display","none");
+                    $("#canvas_renew").css("display","block");
+                    
+                    $("#canvas_renew").on("click",function(){
+                        const name = $("#name").val();
+                        const title = $("#title").val();
+                        const kind = $("#kind").val();
+                        const canvas = $("#drowarea")[0];
+                        const canvas_img = canvas.toDataURL("image/png");
+                        const canvas_data = {        
+                                    "name":name,
+                                    "title":title,
+                                    "kind":kind,
+                                    "img_src":canvas_img
+                        }
+                        const c = JSON.stringify(canvas_data);
+                        // titleは変更が効かないようにしたい
+                        localStorage.setItem(canvas_data.title,c);
+                        alert("お絵かきの更新が完了しました");
+                        // 更新タイミンで消したボタンの復活（renewとclear、メモへの変更で行う）
+                        $("#canvas_new").css("display","block");
+                        $("#canvas_save").css("display","block");
+                        $("#canvas_back").css("display","block");
+                        $("#canvas_renew").css("display","none");
+                        ctx.beginPath();
+                        ctx.clearRect(0,0,can.width,can.height) 
+                    });
+                });    
+                // ----------------------------
             }
         });
             
-        // メモのメニューバー処理
-        // 書き換え処理
-        $("#new").on("click",function(){
-            $("#name").val("");
-            $("#title").val("");
-            $("#text_area").val("");
-        });
-        // 保存処理
-        $("#save").on("click",function(){
-            save_count ++;
-            const name = $("#name").val();
-            const title = $("#title").val();
-            const kind = $("#kind").val();
-            const text_area = $("#text_area").val();
-            // 全てが空欄の時は保存処理ができないよう
-            if (name!="" && title!="" && kind!="" && text_area!=""){
-                const memo_data = {        
-                        "name":name,
-                        "title":title,
-                        "kind":kind,
-                        "text_area":text_area
-                };           
-                // obj形式からjson形式に変更し、それをkey"Data"とし保存                
-                const m = JSON.stringify(memo_data);
-                localStorage.setItem(memo_data.title, m);
-                $("#back_menu").append($('<option>').html(memo_data.title).val(memo_data.title));
-                alert("保存が完了しました");
-                // 初期化する
-                reset();
-            }else{
-                // 空欄項目がある際の処理をelseで記載する
-                alert("入力が必要な項目があります")
-            }
-        });
-
-        // リセット処理は、指定したものだけリセットするかどうかを検討
-        $("#clear").on("click",function(){ 
-            reset();
-            alert("削除しました");
-        });
-
-        // メモ一覧の中のセレクトボックスを選択した際の処理
-        $("#back_menu").change(function(){
-            const memo_return = ("#back_menu").val();
-            const json = localStorage.getItem(memo_return);
-            const memo_data = JSON.parse(json);
-            // localデータに入れ子で登録したデータで複数データ保存ができるようにしている
-            $("#name").val(memo_data.name);
-            $("#title").val(memo_data.title);
-            $("#kind").val(memo_data.kind);
-            $("#text_area").val(memo_data.text_area);  
-
-            // メモ一覧を押したときだけ更新を出現する
-            $("#new").css("display","none");
-            $("#save").css("display","none");
-            $("#renew").css("display","block");
-
-            // 更新の処理について記載
-            $("#renew").on("click",function(){
-                const name = $("#name").val();
-                const title = $("#title").val();
-                const kind = $("#kind").val();
-                const text_area = $("#text_area").val();
-                const memo_data = {        
-                        "name":name,
-                        "title":title,
-                        "kind":kind,
-                        "text_area":text_area
-                };           
-                const m = JSON.stringify(memo_data);
-                // titleは変更が効かないようにしたい
-                localStorage.setItem(memo_data.title, m)
-
-                // 更新ボタンを外し、保存ボタンをつける
-                $("#new").css("display","block");
-                $("#save").css("display","block");
-                $("#renew").css("display","none");
-                alert("メモの更新が完了しました");
-                reset();
-            });
-        })
-
-        // canvasのメニューバー処理
-        // 残課題
-        // ・保存しているものの合計数などを表現するかどうかを考える
-        // ・colorとrangeの初期値に書き換えと保存というかほぼ全てのボタンを押す時に初期値に戻す
-        // 書き換え処理
-        $("#canvas_new").on("click",function(){
-            ctx.beginPath();
-            ctx.clearRect(0,0,can.width,can.height)
-        });
-        $("#canvas_save").on("click",function(){
-            // この0が大事、意味はチューターさんに確認
-            const canvas = $("#drowarea")[0];
-            const canvas_img = canvas.toDataURL("image/png");
-            const canvas_data = {        
-                        "name":name,
-                        "title":title,
-                        "kind":kind,
-                        "img_src":canvas_img
-            }
-            const c = JSON.stringify(cavas_data);
-            localStorage.setItem("canvas_data.title",c);
-            $("#canvas_back_menu").append($('<option>').html(canvas_data.title).val(canvas_data.title));
-            alert("画像保存しました");
-            // 初期化
-            ctx.beginPath();
-            ctx.clearRect(0,0,can.width,can.height)
-        });
-
-        $("#canvas_clear").on("click",function(){
-            ctx.beginPath();
-            ctx.clearRect(0,0,can.width,can.height)
-            alert("リセット完了です");
-        });
         
-        $("#canvas_back_menu").change(function(){
-            const canvas_return = ("#canvas_back_menu").val();
-            const canvas_return_img = localStorage.getItem(canvas_return);
-            const ex_img = new Image();
-            ex_img.src = canvas_return_img
-            ctx.drawImage(img, 0, 0);
-            alert("前のデータを表示しました");
 
-            //表示するメニューの変更
-            $("#canvas_new").css("display","none");
-            $("#canvas_save").css("display","none");
-            $("#canvas_renew").css("display","block");
-            
-            $("#canvas_renew").on("click",function(){
-                const canvas = $("#drowarea")[0];
-                const canvas_img = canvas.toDataURL("image/png");
-                const canvas_data = {        
-                            "name":name,
-                            "title":title,
-                            "kind":kind,
-                            "img_src":canvas_img
-                }
-                const c = JSON.stringify(cavas_data);
-                // titleは変更が効かないようにしたい
-                localStorage.setItem("canvas_data.title",c);
-                alert("お絵かきの更新が完了しました");
-                // 更新タイミンで消したボタンの復活（renewとclear、メモへの変更で行う）
-                $("#canvas_new").css("display","block");
-                $("#canvas_save").css("display","block");
-                $("#canvas_back").css("display","block");
-                $("#canvas_renew").css("display","none");
-                tx.beginPath();
-                ctx.clearRect(0,0,can.width,can.height) 
-            });
-        });
+        
 
         // table表示の部分についての記載
         for(let i=0; i<localStorage.length; i++){
