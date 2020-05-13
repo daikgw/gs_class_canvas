@@ -7,8 +7,11 @@ body{
     font-size: 32px;
 }
 header{
-    margin-bottom: 30px;
+    margin-bottom: 50px;
     background-color: #fff;
+}
+.page_title{
+    margin: auto;
     text-align: center;
     font-weight: bold;
 }
@@ -21,9 +24,35 @@ main{
 .memo{
     width: 75%;
     margin: 0 auto 15px;
+    padding: 0;
     display: flex;
     justify-content: left;
     flex-direction: column;
+}
+.menu-header{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0;
+    text-align: left;
+}
+.menu-header>textarea{
+    width: 20%;
+    margin-right: 15px;
+    padding: 5px;
+    box-sizing: border-box;
+    font-size: 50%;
+}
+.kind{    
+    width: 125px;
+    font-size: 50%;
+}
+.back,.color,.range{
+    width: 125px;
+    margin: 0 15px 15px 0;
+    font-size: 50%;
+    cursor: pointer;
 }
 .midashi{
     /* margin-left: -60px; */
@@ -31,26 +60,8 @@ main{
     justify-content: left;
     align-items: center;
 }
-.title,.name{
-    width: 25%;
-    margin: 0 0 15px;
-    padding: 5px;
-    box-sizing: border-box;
-    /* box-shadow: 1px 1px 1px 1px #555; */
-    font-size: 50%;
-}
-/* セレクトボックスの文字位置を調整したい */
-.kind,.back,.color,.range{
-    width: 125px;
-    margin: 0 0 15px 15px;
-    font-size: 50%;
-    cursor: pointer;
-}
-.kind,.back>option{    
-    font-size: 50%;
-}
 .detail{
-    width: 1400px;
+    width: 100%;
     height: 500px;
 }
 .text_area{
@@ -84,7 +95,7 @@ li{
     cursor: pointer;
 }
 li:hover{
-    background: rgb(200, 200, 200);
+    background: rgb(230, 230, 230);
 }
 li:last-of-type{
     margin-right: 0;
@@ -97,19 +108,34 @@ li:last-of-type:hover{
     width: 100%;
 }
 table{
-    width: 900px;
+    width: 75%;
     margin: auto;
     font-size: 50%;
+    table-layout: fixed;
+}
+.memo_tr{ 
+    background-color: rgb(230, 230, 230);
+}
+.memo_tr:hover{ 
+    background-color: rgb(230, 230, 230);
+}
+tr:hover{
+    background-color: rgb(255, 145, 145);
 }
 th{
-    width: 300px;
+    width: 20%;
     padding: 10px;
     box-sizing: border-box;
     border:solid 1px #555;
 }
 td{
-    width: 300px;
+    width: 20%;
     padding: 10px;
     box-sizing: border-box;
     border:solid 1px #555;
+    text-align: center;
+}
+span{
+    cursor:pointer; color:red;
+    cursor: pointer;
 }
